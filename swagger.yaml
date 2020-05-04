@@ -173,6 +173,23 @@ paths:
       summary: Altera o valor da Transação
       description: Altera o valor da Transação existente na conta do cliente.
       security: 
+        - BasicAuth: []
+      operationId: alteraValorTransacao
+      parameters:
+        - in: path
+          name: codigo
+          type: integer
+          format: int64
+          required: true
+        - in: query
+          name: valor
+          type: number
+          format: double
+          required: true
+        - in: header
+          name: Authorization
+          type: string
+          required: true
       responses:
         204:
           description: Alteração do valor efetuada com sucesso.
