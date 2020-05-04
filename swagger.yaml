@@ -29,7 +29,7 @@ consumes:
 produces:
   - application/json
 
-tags: 
+tags:
   - name: Cliente
   - name: Conta
   - name: Extrato
@@ -38,7 +38,7 @@ tags:
 paths:
   '/cliente':
     post:
-      tags: 
+      tags:
         - Cliente
       summary: Cadastra Cliente
       description: Cadastra um novo cliente
@@ -60,7 +60,7 @@ paths:
 
   '/conta/{agencia}/{numero}/{digito}/saldo':
     get:
-      tags: 
+      tags:
         - Conta
       summary: Consulta Saldo
       description: Consulta o saldo da conta do cliente.
@@ -103,7 +103,7 @@ paths:
 
   '/extrato/{agencia}/{numero}/{digito}':
     get:
-      tags: 
+      tags:
         - Extrato
       summary: Consulta Extrato
       description: Consulta o extrato da conta do cliente.
@@ -144,7 +144,7 @@ paths:
 
   '/transacao':
     post:
-      tags: 
+      tags:
         - Transacao
       summary: Cadastra Transacao na Conta
       description: Cadastra uma transacao de debito ou deposito na conta.
@@ -180,17 +180,15 @@ paths:
         '500':
           description: Erro no servidor.
 
-
-
   '/transacao/{codigo}':
     put:
-      tags: 
+      tags:
         - Transacao
-      summary: Altera o valor da Transação
-      description: Altera o valor da Transação existente na conta do cliente.
-      security: 
-        - BasicAuth: []
+      summary: Altera a transação
+      description: Altera o valor da transação existente.
       operationId: alteraValorTransacao
+      security:
+        - BasicAuth: []
       parameters:
         - in: path
           name: codigo
@@ -207,45 +205,46 @@ paths:
           type: string
           required: true
       responses:
-        204:
-          description: Alteração do valor efetuada com sucesso.
-        400:
+        '204':
+          description: Alteração efeturada com sucesso!
+        '400':
           description: Requisição inválida.
-        401:
+        '401':
           description: Requisição não autorizada.
-        500:
+        '404':
+          description: Registro não encontrado.
+        '500':
           description: Erro no servidor.
-    
+
     delete:
-      tags: 
+      tags:
         - Transacao
       summary: Exclui a transação
-      description: Exclui a transação existente na conta do cliente
+      description: Exclui a transação existente.
       operationId: excluiTransacao
-      security: 
+      security:
         - BasicAuth: []
       parameters:
         - in: path
           name: codigo
+          required: true
           type: integer
           format: int64
-          required: true
         - in: header
           name: Authorization
           type: string
           required: true
       responses:
-        204:
-          description: Transação excluída com sucesso.
-        400:
+        '204':
+          description: Exclusão efetuada com sucesso
+        '400':
           description: Requisição inválida.
-        401:
+        '401':
           description: Requisição não autorizada.
-        500:
-          description: Erro no servidor.
-      
-    
-
+        '404':
+          description: Registro não encontrado.
+        '500':
+          description: Erro no servidor
 
 definitions:
   Cliente:
@@ -324,4 +323,4 @@ definitions:
       transacoes:
         type: array
         items:
-          $ref: '#/definitions/Transacao'
+          $ref: '#/definitions/Transacao' 
